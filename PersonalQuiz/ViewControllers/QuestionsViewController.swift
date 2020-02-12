@@ -12,18 +12,18 @@ class QuestionsViewController: UIViewController {
     
     // MARK: - IB Outlets
     @IBOutlet var questionLabel: UILabel!
+    @IBOutlet var progressView: UIProgressView!
     
     @IBOutlet var singleStackView: UIStackView!
-    @IBOutlet var multipleStackView: UIStackView!
-    @IBOutlet var rangedStackView: UIStackView!
-    
     @IBOutlet var singleButtons: [UIButton]!
+    
+    @IBOutlet var multipleStackView: UIStackView!
     @IBOutlet var multipleLabels: [UILabel]!
     @IBOutlet var multipleSwitches: [UISwitch]!
-    @IBOutlet var rangedLabels: [UILabel]!
     
+    @IBOutlet var rangedLabels: [UILabel]!
+    @IBOutlet var rangedStackView: UIStackView!
     @IBOutlet var rangedSlider: UISlider!
-    @IBOutlet var progressView: UIProgressView!
     
     // MARK: - Private properties
     private let questions = Question.getQuestions()
@@ -33,6 +33,7 @@ class QuestionsViewController: UIViewController {
         questions[questionIndex].answers
     }
 
+    // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
@@ -62,11 +63,6 @@ class QuestionsViewController: UIViewController {
         answerChoosen.append(currentAnswer)
         nextQuestion()
     }
-    
-    deinit {
-        print("QuestionsViewController was been dealocated")
-    }
-
 }
 
 // MARK: - Private Methods
@@ -145,11 +141,12 @@ extension QuestionsViewController {
         }
     }
     
-    
-    /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "ResultSegue" {
+            let resultVC = segue.destination as! ResultsViewController
+            resultVC.answers = answerChoosen
+        }
+        
     }
-    */
 }

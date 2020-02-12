@@ -10,29 +10,39 @@ import UIKit
 
 class ResultsViewController: UIViewController {
     
-    // 1. Передать сюда массив с ответами
-    // 2. Определить наиболее часто встречающийся тип животного
-    // 3. Отобразить результаты в соотвствии с этим животным
-
+    // MARK: - IB Outlets
+    @IBOutlet var resultTitle: UILabel!
+    @IBOutlet var resultDescription: UILabel!
+    
+    // MARK: - Public properties
+    var answers: [Answer]?
+    
+    // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.setHidesBackButton(true, animated: false)
 
-        // Do any additional setup after loading the view.
+        guard let answersChoosen = answers else { return }
+        let animalType = CalculateResult(of: answersChoosen)
+        ShowResult(animal: animalType)
+    }
+
+    // MARK: - Private methods
+    private func CalculateResult(of answers: [Answer]) -> AnimalType {
+
+        var totalScores: [AnimalType: Int] = [:]
+
+        for answer in answers {
+            let score = totalScores[answer.type, default: 0]
+            totalScores.updateValue(score + 1, forKey: answer.type)
+        }
+        let mostScores = totalScores.max { a, b in a.value < b.value }
+
+        return mostScores?.key ?? AnimalType.cat
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func ShowResult(animal: AnimalType) {
+        resultTitle.text = "Вы - \(animal.animalSign)!"
+        resultDescription.text = animal.definition
     }
-    */
-    
-    deinit {
-        print("ResultsViewController was been dealocated")
-    }
-
 }

@@ -36,7 +36,7 @@ class ResultsViewController: UIViewController {
             let score = totalScores[answer.type, default: 0]
             totalScores.updateValue(score + 1, forKey: answer.type)
         }
-        let mostScores = totalScores.max { a, b in a.value < b.value }
+        let mostScores = totalScores.max { $0.value < $1.value }
 
         return mostScores?.key ?? AnimalType.cat
     }

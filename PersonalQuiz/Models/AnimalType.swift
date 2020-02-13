@@ -24,8 +24,4 @@ enum AnimalType: Character {
             return "Ваша сила - в мудрости. Медленный и вдумчивый выигрывает на больших расстояниях"
         }
     }
-
-    var animalSign: String {
-        return String(self.rawValue)
-    }
 }

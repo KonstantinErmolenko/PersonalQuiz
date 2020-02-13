@@ -42,7 +42,7 @@ class ResultsViewController: UIViewController {
     }
     
     private func ShowResult(animal: AnimalType) {
-        resultTitle.text = "Вы - \(animal.animalSign)!"
+        resultTitle.text = "Вы - \(animal.rawValue)!"
         resultDescription.text = animal.definition
     }
 }

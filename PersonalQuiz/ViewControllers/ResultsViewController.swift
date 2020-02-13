@@ -23,24 +23,11 @@ class ResultsViewController: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated: false)
 
         guard let answersChoosen = answers else { return }
-        let animalType = CalculateResult(of: answersChoosen)
+        let animalType = ResultCalculator.CalculateResult(of: answersChoosen)
         ShowResult(animal: animalType)
     }
 
     // MARK: - Private methods
-    private func CalculateResult(of answers: [Answer]) -> AnimalType {
-
-        var totalScores: [AnimalType: Int] = [:]
-
-        for answer in answers {
-            let score = totalScores[answer.type, default: 0]
-            totalScores.updateValue(score + 1, forKey: answer.type)
-        }
-        let mostScores = totalScores.max { $0.value < $1.value }
-
-        return mostScores?.key ?? AnimalType.cat
-    }
-    
     private func ShowResult(animal: AnimalType) {
         resultTitle.text = "Вы - \(animal.rawValue)!"
         resultDescription.text = animal.definition
